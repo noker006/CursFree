@@ -7,12 +7,66 @@ public with sharing class RequestTriggerHandler {
         createNotificationForEmployer(requests);
     }
 
-    public static void createNotificationForEmployer(List<Request__c> requests) {
+    public static void afterUpdateMethod(List<Request__c> newList, Map<Id, Request__c> oldMap){
+        checkRequestStatus(newList, oldMap);
+    }
+
+    public static void checkRequestStatus(List<Request__c> newRequests, Map<Id, Request__c> oldRequestMap){
+        List<Request__c> rejectedRequests = new List<Request__c>();
+        List<Request__c> confirmedRequests = new List<Request__c>();
+
+        for(Request__c req : newRequests) {
+            Request__c oldRequest =  oldRequestMap.get(req.Id);
+
+            if(req.Status__c != oldRequest.Status__c){
+                if(req.Status__c == 'Rejected'){
+                    rejectedRequests.add(req);
+                } else if(req.Status__c == 'Confirmed'){
+                    confirmedRequests.add(req);
+                }
+            }
+        }
+
+        createNotificationForFreelancer(rejectedRequests,'Rejected');
+
+        createNotificationForFreelancer(confirmedRequests,'Confirmed');
+    }
+
+    public static void createContractAndActivity(List<Request__c> requests) {
+        for(Request__c req :requests) {
+
+        }
+    }
+
+    public static void createNotificationForFreelancer(List<Request__c> requests, String requestStatus){
+        List<Notification__c> notifications = new List<Notification__c>();
+
+        List<Id> requestIds = getIdsFromRequestsList(requests);
+        List<Request__c> reQRequests = getRequestsByIds(requestIds);
+
+        for (Request__c req : reQRequests) {
+            Notification__c notification = new Notification__c();
+            notification.Name = 'Your request was ' + requestStatus;
+            notification.Text__c = 'Your request was ' + requestStatus + ' (Job "'+ req.JobId__r.Name +'")';
+            notification.FreelancerId__c = req.FreelancerId__c;
+            notifications.add(notification);
+        }
+
+        insert notifications;
+    }
+
+    public static List<Id> getIdsFromRequestsList(List<Request__c> requests) {
         List<Id> requestIds = new List<Id>();
 
         for (Request__c req : requests) {
             requestIds.add(req.Id);
         }
+
+        return requestIds;
+    }
+
+    public static void createNotificationForEmployer(List<Request__c> requests) {
+        List<Id> requestIds = getIdsFromRequestsList(requests);
 
         List<Request__c> reQRequests = getRequestsByIds(requestIds);
         Map<Id, Id> jobIdByRequestId = getJobIdByRequestId(requests);
@@ -23,7 +77,7 @@ public with sharing class RequestTriggerHandler {
             Id jobId = jobIdByRequestId.get(req.Id);
             Id employerId = employerIdByJobId.get(jobId);
             Notification__c notification = new Notification__c();
-            notification.Name = 'Request from ' + req.FreelancerId__r.FirstName__c + ' ' + req.FreelancerId__r.LastName__c;
+            notification.Name = 'Request from ' + req.FreelancerId__r.Name;
             notification.Text__c = 'You have new request, Please check Job ' + req.JobId__r.Name;
             notification.EmployerId__c = employerId;
             notifications.add(notification);
@@ -34,7 +88,9 @@ public with sharing class RequestTriggerHandler {
 
     public static List<Request__c> getRequestsByIds(List<Id> requestIds) {
         return [
-                SELECT Id, FreelancerId__r.FirstName__c, FreelancerId__r.LastName__c, JobId__r.Name
+                SELECT Id,
+                        FreelancerId__r.Name,
+                        JobId__r.Name
                 FROM Request__c
                 WHERE Id IN :requestIds
         ];

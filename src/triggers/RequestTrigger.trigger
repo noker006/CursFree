@@ -8,8 +8,7 @@ trigger RequestTrigger on Request__c (after insert, after update) {
             RequestTriggerHandler.afterInsertMethod(Trigger.new);
         }
         when AFTER_UPDATE {
-//            RequestTriggerHandler.convertProxyObjectsToStandard(Trigger.newMap);
-//            RequestTriggerHandler.createCustomerInGFN(Trigger.new, Trigger.oldMap);
+            RequestTriggerHandler.afterUpdateMethod(Trigger.new, Trigger.oldMap);
         }
     }
 }
