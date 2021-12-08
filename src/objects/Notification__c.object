@@ -154,86 +154,26 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
-        <fullName>Duration__c</fullName>
+        <fullName>EmployerId__c</fullName>
         <externalId>false</externalId>
-        <label>Duration</label>
-        <required>true</required>
+        <label>Employer</label>
+        <referenceTo>Employer__c</referenceTo>
+        <relationshipLabel>Notifications</relationshipLabel>
+        <relationshipName>Notifications</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>1_month</fullName>
-                    <default>false</default>
-                    <label>1 month</label>
-                </value>
-                <value>
-                    <fullName>2_months</fullName>
-                    <default>false</default>
-                    <label>2 months</label>
-                </value>
-                <value>
-                    <fullName>3_months</fullName>
-                    <default>false</default>
-                    <label>3 months</label>
-                </value>
-                <value>
-                    <fullName>4_months</fullName>
-                    <default>false</default>
-                    <label>4 months</label>
-                </value>
-                <value>
-                    <fullName>5_months</fullName>
-                    <default>false</default>
-                    <label>5 months</label>
-                </value>
-                <value>
-                    <fullName>6_months</fullName>
-                    <default>false</default>
-                    <label>6 months</label>
-                </value>
-                <value>
-                    <fullName>Less_than_1_month</fullName>
-                    <default>false</default>
-                    <label>Less than 1 month</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>FreelancerId__c</fullName>
-        <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
         <label>Freelancer</label>
         <referenceTo>Freelancer__c</referenceTo>
-        <relationshipLabel>Contracts</relationshipLabel>
-        <relationshipName>Contracts</relationshipName>
-        <required>true</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>HourlyRate__c</fullName>
-        <externalId>false</externalId>
-        <label>HourlyRate</label>
-        <length>30</length>
-        <required>true</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>JobId__c</fullName>
-        <externalId>false</externalId>
-        <label>JobId</label>
-        <referenceTo>Job__c</referenceTo>
-        <relationshipLabel>Contracts</relationshipLabel>
-        <relationshipName>Contracts</relationshipName>
+        <relationshipLabel>Notifications</relationshipLabel>
+        <relationshipName>Notifications</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
@@ -242,42 +182,22 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>Status__c</fullName>
+        <fullName>Text__c</fullName>
         <externalId>false</externalId>
-        <label>Status</label>
-        <required>true</required>
+        <label>Text</label>
+        <length>130768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Frozen</fullName>
-                    <default>false</default>
-                    <label>Frozen</label>
-                </value>
-                <value>
-                    <fullName>Done</fullName>
-                    <default>false</default>
-                    <label>Done</label>
-                </value>
-                <value>
-                    <fullName>In process</fullName>
-                    <default>false</default>
-                    <label>In process</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
-    <label>Contract</label>
+    <label>Notification</label>
     <nameField>
-        <label>Contract Name</label>
+        <label>Notification Name</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Contracts</pluralLabel>
+    <pluralLabel>Notifications</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>

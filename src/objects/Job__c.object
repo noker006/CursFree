@@ -281,6 +281,19 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>EmployerId__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Employer</label>
+        <referenceTo>Employer__c</referenceTo>
+        <relationshipLabel>Jobs</relationshipLabel>
+        <relationshipName>Jobs</relationshipName>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>FreelancerExperienceLevel__c</fullName>
         <externalId>false</externalId>
         <label>FreelancerExperienceLevel</label>
@@ -676,6 +689,36 @@
             </valueSetDefinition>
         </valueSet>
         <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Frozen</fullName>
+                    <default>false</default>
+                    <label>Frozen</label>
+                </value>
+                <value>
+                    <fullName>Done</fullName>
+                    <default>false</default>
+                    <label>Done</label>
+                </value>
+                <value>
+                    <fullName>In process</fullName>
+                    <default>false</default>
+                    <label>In process</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Title__c</fullName>
