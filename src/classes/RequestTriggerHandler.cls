@@ -65,6 +65,20 @@ public with sharing class RequestTriggerHandler {
         insert contracts;
     }
 
+    public static List<Request__c> getRequestsByIds(List<Id> requestIds) {
+        return [
+                SELECT Id,
+                        FreelancerId__r.Name,
+                        JobId__r.Name,
+                        Duration__c,
+                        FreelancerId__c,
+                        Hourly_rate__c,
+                        JobId__c
+                FROM Request__c
+                WHERE Id IN :requestIds
+        ];
+    }
+
     public static void createNotificationForFreelancer(List<Request__c> requests, String requestStatus){
         List<Notification__c> notifications = new List<Notification__c>();
 
@@ -111,16 +125,6 @@ public with sharing class RequestTriggerHandler {
         }
 
         insert notifications;
-    }
-
-    public static List<Request__c> getRequestsByIds(List<Id> requestIds) {
-        return [
-                SELECT Id,
-                        FreelancerId__r.Name,
-                        JobId__r.Name
-                FROM Request__c
-                WHERE Id IN :requestIds
-        ];
     }
 
     public static Map<Id, Id> getJobIdByRequestId(List<Request__c> requests) {
