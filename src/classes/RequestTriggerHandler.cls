@@ -37,7 +37,10 @@ public with sharing class RequestTriggerHandler {
         List<Contract__c> contracts = new List<Contract__c>();
         List<Activity__c> activities = new List<Activity__c>();
 
-        for(Request__c req :requests){
+        List<Id> requestIds = getIdsFromRequestsList(requests);
+        List<Request__c> reQRequests = getRequestsByIds(requestIds);
+
+        for(Request__c req :reQRequests){
             Contract__c contract = new Contract__c();
             contract.Name = 'Contract with ' +  req.FreelancerId__r.Name;
             contract.Duration__c = req.Duration__c;
@@ -54,8 +57,10 @@ public with sharing class RequestTriggerHandler {
 
             activities.add(activity);
             contracts.add(contract);
+
         }
-        
+
+
         insert activities;
         insert contracts;
     }
