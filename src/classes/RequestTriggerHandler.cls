@@ -57,6 +57,7 @@ public with sharing class RequestTriggerHandler {
 
             activities.add(activity);
             contracts.add(contract);
+
         }
 
         insert activities;

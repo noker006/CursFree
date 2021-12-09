@@ -11,12 +11,25 @@ public with sharing class MessageTriggerHandler {
         createHistory( 'Update', oldMap , newList);
     }
 
+    public static List<Id> getIdsFromMessagesList(List<Message__c> messages) {
+        List<Id> mesIds = new List<Id>();
+
+        for (Message__c mes : messages) {
+            mesIds.add(mes.Id);
+        }
+
+        return mesIds;
+    }
+
     //TODO сделать кверюдля мессаджей где достану заново эти релейшены для фрилансера и имплойера
     public static void createHistory(String activityType, Map<Id, Message__c> oldMessagesMap, List<Message__c> newMessages) {
         List<History__c> histories = new List<History__c>();
-        List<Message__c> messages = getMessagesByIds(oldMessagesMap.keySet());
+
+        List<Id> mesIds = getIdsFromMessagesList(newMessages);
+        List<Message__c> messages = getMessagesByIds(mesIds);
 
         if (activityType == 'Create') {
+
 
             for(Message__c newMess : messages){
                 History__c historyCreate = new History__c();
@@ -55,7 +68,7 @@ public with sharing class MessageTriggerHandler {
         insert histories;
     }
 
-    public static List<Message__c> getMessagesByIds(Set<Id> messIds) {
+    public static List<Message__c> getMessagesByIds(List<Id> messIds) {
 
         return [
                 SELECT Id,
