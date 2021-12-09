@@ -50,16 +50,14 @@ public with sharing class RequestTriggerHandler {
             contract.Status__c = 'Frozen';
 
             Activity__c activity = new Activity__c();
-            activity.Name = req.FreelancerId__r.Name + 'Activity';
+            activity.Name = req.FreelancerId__r.Name + ' Activity';
             activity.FreelancerId__c = req.FreelancerId__c;
             activity.JobId__c = req.JobId__c;
             activity.LastActivity__c = Datetime.now();
 
             activities.add(activity);
             contracts.add(contract);
-
         }
-
 
         insert activities;
         insert contracts;
