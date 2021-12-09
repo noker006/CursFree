@@ -30,12 +30,34 @@ public with sharing class RequestTriggerHandler {
         createNotificationForFreelancer(rejectedRequests,'Rejected');
 
         createNotificationForFreelancer(confirmedRequests,'Confirmed');
+        createContractAndActivity(confirmedRequests);
     }
 
-    public static void createContractAndActivity(List<Request__c> requests) {
-        for(Request__c req :requests) {
+    public static void createContractAndActivity(List<Request__c> requests){
+        List<Contract__c> contracts = new List<Contract__c>();
+        List<Activity__c> activities = new List<Activity__c>();
 
+        for(Request__c req :requests){
+            Contract__c contract = new Contract__c();
+            contract.Name = 'Contract with ' +  req.FreelancerId__r.Name;
+            contract.Duration__c = req.Duration__c;
+            contract.FreelancerId__c = req.FreelancerId__c;
+            contract.HourlyRate__c = req.Hourly_rate__c;
+            contract.JobId__c = req.JobId__c;
+            contract.Status__c = 'Frozen';
+
+            Activity__c activity = new Activity__c();
+            activity.Name = req.FreelancerId__r.Name + 'Activity';
+            activity.FreelancerId__c = req.FreelancerId__c;
+            activity.JobId__c = req.JobId__c;
+            activity.LastActivity__c = Datetime.now();
+
+            activities.add(activity);
+            contracts.add(contract);
         }
+        
+        insert activities;
+        insert contracts;
     }
 
     public static void createNotificationForFreelancer(List<Request__c> requests, String requestStatus){
